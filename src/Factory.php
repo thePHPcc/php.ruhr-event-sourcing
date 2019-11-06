@@ -5,7 +5,7 @@ class Factory {
 
     public function createCheckoutService(SessionId $sid): CheckoutService {
 
-        $sessionService = new SessionService($sid);
+        $sessionService = $this->createSessionService($sid);
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addListener(
@@ -29,5 +29,17 @@ class Factory {
             $dispatcher
         );
 
+    }
+
+    private function createSessionService(SessionId $sid) {
+        $fname = sprintf('/tmp/checkout/%s.session', $sid->asString());
+
+        if (!file_exists($fname)) {
+            return new SessionService($sid);
+        }
+
+        return \unserialize(
+            \file_get_contents($fname)
+        );
     }
 }

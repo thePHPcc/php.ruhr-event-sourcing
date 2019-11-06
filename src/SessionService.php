@@ -17,8 +17,6 @@ class SessionService {
         return $this->sessionid;
     }
 
-
-
     public function updateCheckoutId(EmitterId $emitterId) {
         $this->checkoutId = $emitterId;
     }
@@ -29,5 +27,12 @@ class SessionService {
 
     public function checkoutId(): EmitterId {
         return $this->checkoutId;
+    }
+
+    public function persist(): void {
+        file_put_contents(
+            '/tmp/checkout/' . $this->sessionid->asString() . '.session',
+            \serialize($this)
+        );
     }
 }

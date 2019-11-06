@@ -18,6 +18,8 @@ class SessionUpdater implements EventListener {
         $this->sessionService->updateCheckoutId(
             $event->emitterId()
         );
+
+        $this->sessionService->persist();
     }
 
 }
