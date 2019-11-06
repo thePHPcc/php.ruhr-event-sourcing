@@ -25,6 +25,7 @@ spl_autoload_register(
                 'eventsourcing\\eventlogreader' => '/EventLogReader.php',
                 'eventsourcing\\eventlogwriter' => '/EventLogWriter.php',
                 'eventsourcing\\eventsourced' => '/domain/EventSourced.php',
+                'eventsourcing\\factory' => '/Factory.php',
                 'eventsourcing\\filesystemeventlogreader' => '/FileSystemEventLogReader.php',
                 'eventsourcing\\filesystemeventlogwriter' => '/FileSystemEventLogWriter.php',
                 'eventsourcing\\sessionid' => '/domain/SessionId.php',
