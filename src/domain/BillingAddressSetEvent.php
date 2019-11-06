@@ -6,10 +6,10 @@ class BillingAddressSetEvent implements Event {
     /** @var BillingAddress */
     private $address;
 
-    /** @var CheckoutId */
+    /** @var EmitterId */
     private $checkoutId;
 
-    public function __construct(CheckoutId $checkoutId, BillingAddress $address) {
+    public function __construct(EmitterId $checkoutId, BillingAddress $address) {
         $this->checkoutId = $checkoutId;
         $this->address = $address;
     }
@@ -18,7 +18,7 @@ class BillingAddressSetEvent implements Event {
         return $this->address;
     }
 
-    public function checkoutId(): CheckoutId {
+    public function emitterId(): EmitterId {
         return $this->checkoutId;
     }
 

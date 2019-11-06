@@ -6,10 +6,10 @@ class CheckoutStartedEvent implements Event {
     /** @var CartItemCollection */
     private $cartItems;
 
-    /** @var CheckoutId */
+    /** @var EmitterId */
     private $checkoutId;
 
-    public function __construct(CheckoutId $checkoutId, CartItemCollection $cartItems) {
+    public function __construct(EmitterId $checkoutId, CartItemCollection $cartItems) {
         $this->checkoutId = $checkoutId;
         $this->cartItems = $cartItems;
     }
@@ -18,7 +18,7 @@ class CheckoutStartedEvent implements Event {
         return $this->cartItems;
     }
 
-    public function checkoutId(): CheckoutId {
+    public function emitterId(): EmitterId {
         return $this->checkoutId;
     }
 

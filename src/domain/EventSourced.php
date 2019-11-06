@@ -1,6 +1,8 @@
 <?php declare(strict_types = 1);
 namespace Eventsourcing;
 
+use RuntimeException;
+
 abstract class EventSourced {
 
     /** @var EventLog */
@@ -16,8 +18,16 @@ abstract class EventSourced {
     }
 
     private function replay(EventLog $eventLog): void {
+        $id = null;
         foreach($eventLog as $event) {
             /** @var Event $event */
+
+            if ($id === null ) {
+                $id = $event->emitterId();
+            } elseif ($id !== $event->emitterId()) {
+                throw new RuntimeException('Event by different emitter received');
+            }
+
             $this->applyEvent($event);
         }
     }

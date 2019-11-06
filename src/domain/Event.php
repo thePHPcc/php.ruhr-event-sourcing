@@ -2,5 +2,5 @@
 namespace Eventsourcing;
 
 interface Event {
-
+    public function emitterId(): EmitterId;
 }

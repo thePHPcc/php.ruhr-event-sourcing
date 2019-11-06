@@ -14,7 +14,7 @@ class Checkout extends EventSourced {
     /** @var bool */
     private $started = false;
 
-    /** @var CheckoutId */
+    /** @var EmitterId */
     private $id;
 
     public function start(CartItemCollection $cartItems): void {
@@ -22,7 +22,7 @@ class Checkout extends EventSourced {
             throw new RuntimeException('Can not start for empty collections');
         }
 
-        $id = new CheckoutId(trim(exec('uuidgen')));
+        $id = new EmitterId(trim(exec('uuidgen')));
         $this->handle(new CheckoutStartedEvent($id, $cartItems));
     }
 
@@ -47,7 +47,7 @@ class Checkout extends EventSourced {
 
     private function applyCheckoutStartedEvent(CheckoutStartedEvent $event): void {
         $this->cartItems = $event->cartItems();
-        $this->id = $event->checkoutId();
+        $this->id = $event->emitterId();
         $this->started = true;
     }
 
