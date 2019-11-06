@@ -3,21 +3,23 @@ namespace Eventsourcing;
 
 require __DIR__ . '/src/autoload.php';
 
-$cartItems = new CartItemCollection();
-$cartItems->add(new CartItem(1, 'foo', 123));
+$sid = new SessionId('has4t1glskcktjh4ujs9eet26u');
 
+$cartService = new CartService();
+$cartItems = $cartService->getCartItems($sid);
 
-$log = new EventLog();
+$writer = new FileSystemEventLogWriter('/tmp/checkout.events');
+$reader = new FileSystemEventLogReader('/tmp/checkout.events');
 
-$checkout = new Checkout($log);
+$checkout = new Checkout(new EventLog());
 $checkout->start($cartItems);
-$log = $checkout->changes();
 
-var_dump($log);
+$writer->write($checkout->changes());
 
-echo " -....- \n\n\n";
-
-$checkout = new Checkout($log);
+$checkout = new Checkout($reader->read());
 $checkout->setBillingAddress(new BillingAddress());
 
+$writer->write($checkout->changes());
+
 var_dump($checkout->changes());
+

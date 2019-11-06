@@ -17,7 +17,11 @@ spl_autoload_register(
                 'eventsourcing\\checkoutstartedevent' => '/domain/CheckoutStartedEvent.php',
                 'eventsourcing\\event' => '/domain/Event.php',
                 'eventsourcing\\eventlog' => '/domain/EventLog.php',
+                'eventsourcing\\eventlogreader' => '/EventLogReader.php',
+                'eventsourcing\\eventlogwriter' => '/EventLogWriter.php',
                 'eventsourcing\\eventsourced' => '/domain/EventSourced.php',
+                'eventsourcing\\filesystemeventlogreader' => '/FileSystemEventLogReader.php',
+                'eventsourcing\\filesystemeventlogwriter' => '/FileSystemEventLogWriter.php',
                 'eventsourcing\\sessionid' => '/domain/SessionId.php'
             );
         }
