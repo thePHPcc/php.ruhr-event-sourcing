@@ -5,21 +5,15 @@ require __DIR__ . '/src/autoload.php';
 
 $sid = new SessionId('has4t1glskcktjh4ujs9eet26u');
 
-$cartService = new CartService();
-$cartItems = $cartService->getCartItems($sid);
+$checkoutService = new CheckoutService(
+    new CartService(),
+    new SessionService($sid),
+    new FileSystemEventLogWriter('/tmp/checkout'),
+    new FileSystemEventLogReader('/tmp/checkout')
+);
 
-$writer = new FileSystemEventLogWriter('/tmp/checkout');
-$reader = new FileSystemEventLogReader('/tmp/checkout');
+$checkoutService->start();
 
-$checkout = new Checkout(new EventLog());
-$checkoutId = $checkout->start($cartItems);
+$checkoutService->defineBillingAddress(new BillingAddress());
 
-$writer->write($checkout->changes());
-
-$checkout = new Checkout($reader->read($checkoutId));
-$checkout->setBillingAddress(new BillingAddress());
-
-$writer->write($checkout->changes());
-
-var_dump($checkout->changes());
 

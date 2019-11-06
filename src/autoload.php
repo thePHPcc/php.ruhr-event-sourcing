@@ -14,6 +14,7 @@ spl_autoload_register(
                 'eventsourcing\\cartnotfoundexception' => '/domain/CartNotFoundException.php',
                 'eventsourcing\\cartservice' => '/CartService.php',
                 'eventsourcing\\checkout' => '/Checkout.php',
+                'eventsourcing\\checkoutservice' => '/CheckoutService.php',
                 'eventsourcing\\checkoutstartedevent' => '/domain/CheckoutStartedEvent.php',
                 'eventsourcing\\emitterid' => '/domain/EmitterId.php',
                 'eventsourcing\\event' => '/domain/Event.php',
@@ -23,7 +24,8 @@ spl_autoload_register(
                 'eventsourcing\\eventsourced' => '/domain/EventSourced.php',
                 'eventsourcing\\filesystemeventlogreader' => '/FileSystemEventLogReader.php',
                 'eventsourcing\\filesystemeventlogwriter' => '/FileSystemEventLogWriter.php',
-                'eventsourcing\\sessionid' => '/domain/SessionId.php'
+                'eventsourcing\\sessionid' => '/domain/SessionId.php',
+                'eventsourcing\\sessionservice' => '/SessionService.php'
             );
         }
         $cn = strtolower($class);
