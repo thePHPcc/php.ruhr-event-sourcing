@@ -13,7 +13,9 @@ $checkout = new Checkout($log);
 $checkout->start($cartItems);
 $log = $checkout->changes();
 
-// -....-
+var_dump($log);
+
+echo " -....- \n\n\n";
 
 $checkout = new Checkout($log);
 $checkout->setBillingAddress(new BillingAddress());

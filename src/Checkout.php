@@ -3,10 +3,7 @@ namespace Eventsourcing;
 
 use RuntimeException;
 
-class Checkout {
-
-    /** @var EventLog */
-    private $eventLog;
+class Checkout extends EventSourced {
 
     /** @var BillingAddress */
     private $billingAddress;
@@ -17,18 +14,12 @@ class Checkout {
     /** @var bool */
     private $started = false;
 
-    public function __construct(EventLog $eventLog) {
-        $this->replay($eventLog);
-        $this->eventLog = new EventLog();
-    }
-
     public function start(CartItemCollection $cartItems): void {
         if ($cartItems->count() === 0) {
             throw new RuntimeException('Can not start for empty collections');
         }
-        $event = new CheckoutStartedEvent($cartItems);
-        $this->eventLog->add($event);
-        $this->applyCheckoutStartedEvent($event);
+
+        $this->handle(new CheckoutStartedEvent($cartItems));
     }
 
     public function setBillingAddress(BillingAddress $address): void {
@@ -36,17 +27,18 @@ class Checkout {
             throw new RuntimeException('Checkout not started');
         }
 
-        $event = new BillingAddressSetEvent($address);
-        $this->eventLog->add($event);
-        $this->applyBillingAddressEvent($event);
+        $this->handle(new BillingAddressSetEvent($address));
     }
 
-    public function changes(): EventLog {
-        return $this->eventLog;
-    }
+    protected function applyEvent(Event $event): void {
+        if ($event instanceof CheckoutStartedEvent) {
+            $this->applyCheckoutStartedEvent($event);
+            return;
+        }
 
-    public function billingAddress(): BillingAddress {
-        return $this->billingAddress;
+        if ($event instanceof BillingAddressSetEvent) {
+            $this->applyBillingAddressEvent($event);
+        }
     }
 
     private function applyBillingAddressEvent(BillingAddressSetEvent $event): void {
@@ -56,20 +48,5 @@ class Checkout {
     private function applyCheckoutStartedEvent(CheckoutStartedEvent $event): void {
         $this->cartItems = $event->cartItems();
         $this->started = true;
-    }
-
-    private function replay(EventLog $eventLog): void {
-        foreach($eventLog as $event) {
-            /** @var Event $event */
-
-            if ($event instanceof CheckoutStartedEvent) {
-                $this->applyCheckoutStartedEvent($event);
-                continue;
-            }
-
-            if ($event instanceof BillingAddressSetEvent) {
-                $this->applyBillingAddressEvent($event);
-            }
-        }
     }
 }
