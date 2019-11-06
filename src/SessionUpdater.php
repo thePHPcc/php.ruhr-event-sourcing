@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 namespace Eventsourcing;
 
-class CheckoutStartedListener implements EventListener {
+class SessionUpdater implements EventListener {
 
     /** @var SessionService */
     private $sessionService;
@@ -14,7 +14,7 @@ class CheckoutStartedListener implements EventListener {
         if (!$event instanceof CheckoutStartedEvent) {
             return;
         }
-        
+
         $this->sessionService->updateCheckoutId(
             $event->emitterId()
         );

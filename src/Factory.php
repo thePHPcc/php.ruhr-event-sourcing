@@ -9,8 +9,15 @@ class Factory {
 
         $dispatcher = new EventDispatcher();
         $dispatcher->addListener(
-            new CheckoutStartedListener(
-                $sessionService
+            new SessionUpdater($sessionService)
+        );
+
+        $dispatcher->addListener(
+            new ConfirmPageProjector(
+                new ConfirmPageRenderer(
+                    '/tmp/checkout',
+                    $sessionService->sessionid()
+                )
             )
         );
 

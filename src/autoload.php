@@ -16,7 +16,8 @@ spl_autoload_register(
                 'eventsourcing\\checkout' => '/Checkout.php',
                 'eventsourcing\\checkoutservice' => '/CheckoutService.php',
                 'eventsourcing\\checkoutstartedevent' => '/domain/CheckoutStartedEvent.php',
-                'eventsourcing\\checkoutstartedlistener' => '/CheckoutStartedListener.php',
+                'eventsourcing\\confirmpageprojector' => '/ConfirmPageProjector.php',
+                'eventsourcing\\confirmpagerenderer' => '/ConfirmPageRenderer.php',
                 'eventsourcing\\emitterid' => '/domain/EmitterId.php',
                 'eventsourcing\\event' => '/domain/Event.php',
                 'eventsourcing\\eventdispatcher' => '/EventDispatcher.php',
@@ -30,6 +31,7 @@ spl_autoload_register(
                 'eventsourcing\\filesystemeventlogwriter' => '/FileSystemEventLogWriter.php',
                 'eventsourcing\\sessionid' => '/domain/SessionId.php',
                 'eventsourcing\\sessionservice' => '/SessionService.php',
+                'eventsourcing\\sessionupdater' => '/SessionUpdater.php',
                 'eventsourcing\\snapshotevent' => '/domain/SnapshotEvent.php',
                 'eventsourcing\\snapshotter' => '/Snapshotter.php',
                 'eventsourcing\\timedfilesystemeventlogreader' => '/TimedFileSystemEventLogReader.php'
