@@ -14,6 +14,7 @@ spl_autoload_register(
                 'eventsourcing\\cartnotfoundexception' => '/domain/CartNotFoundException.php',
                 'eventsourcing\\cartservice' => '/CartService.php',
                 'eventsourcing\\checkout' => '/Checkout.php',
+                'eventsourcing\\checkoutid' => '/domain/CheckoutId.php',
                 'eventsourcing\\checkoutstartedevent' => '/domain/CheckoutStartedEvent.php',
                 'eventsourcing\\event' => '/domain/Event.php',
                 'eventsourcing\\eventlog' => '/domain/EventLog.php',

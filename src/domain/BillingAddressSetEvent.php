@@ -6,12 +6,20 @@ class BillingAddressSetEvent implements Event {
     /** @var BillingAddress */
     private $address;
 
-    public function __construct(BillingAddress $address) {
+    /** @var CheckoutId */
+    private $checkoutId;
+
+    public function __construct(CheckoutId $checkoutId, BillingAddress $address) {
+        $this->checkoutId = $checkoutId;
         $this->address = $address;
     }
 
     public function address(): BillingAddress {
         return $this->address;
+    }
+
+    public function checkoutId(): CheckoutId {
+        return $this->checkoutId;
     }
 
 }

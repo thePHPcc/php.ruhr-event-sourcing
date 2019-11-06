@@ -14,12 +14,16 @@ class Checkout extends EventSourced {
     /** @var bool */
     private $started = false;
 
+    /** @var CheckoutId */
+    private $id;
+
     public function start(CartItemCollection $cartItems): void {
         if ($cartItems->count() === 0) {
             throw new RuntimeException('Can not start for empty collections');
         }
 
-        $this->handle(new CheckoutStartedEvent($cartItems));
+        $id = new CheckoutId(trim(exec('uuidgen')));
+        $this->handle(new CheckoutStartedEvent($id, $cartItems));
     }
 
     public function setBillingAddress(BillingAddress $address): void {
@@ -27,7 +31,7 @@ class Checkout extends EventSourced {
             throw new RuntimeException('Checkout not started');
         }
 
-        $this->handle(new BillingAddressSetEvent($address));
+        $this->handle(new BillingAddressSetEvent($this->id, $address));
     }
 
     protected function applyEvent(Event $event): void {
@@ -41,12 +45,13 @@ class Checkout extends EventSourced {
         }
     }
 
-    private function applyBillingAddressEvent(BillingAddressSetEvent $event): void {
-        $this->billingAddress = $event->address();
-    }
-
     private function applyCheckoutStartedEvent(CheckoutStartedEvent $event): void {
         $this->cartItems = $event->cartItems();
+        $this->id = $event->checkoutId();
         $this->started = true;
+    }
+
+    private function applyBillingAddressEvent(BillingAddressSetEvent $event): void {
+        $this->billingAddress = $event->address();
     }
 }
