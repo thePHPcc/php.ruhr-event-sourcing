@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 namespace Eventsourcing;
 
-class CheckoutStartedEvent {
+class CheckoutStartedEvent implements Event {
 
     /** @var CartItemCollection */
     private $cartItems;

@@ -3,8 +3,19 @@ namespace Eventsourcing;
 
 require __DIR__ . '/src/autoload.php';
 
-$checkout = new Checkout();
-$checkout->start(new CartItemCollection());
+$cartItems = new CartItemCollection();
+$cartItems->add(new CartItem(1, 'foo', 123));
+
+
+$log = new EventLog();
+
+$checkout = new Checkout($log);
+$checkout->start($cartItems);
+$log = $checkout->changes();
+
+// -....-
+
+$checkout = new Checkout($log);
 $checkout->setBillingAddress(new BillingAddress());
 
-var_dump($checkout->eventLog());
+var_dump($checkout->changes());

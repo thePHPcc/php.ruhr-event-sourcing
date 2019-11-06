@@ -1,7 +1,7 @@
 <?php declare(strict_types = 1);
 namespace Eventsourcing;
 
-class BillingAddressSetEvent {
+class BillingAddressSetEvent implements Event {
 
     /** @var BillingAddress */
     private $address;

@@ -15,6 +15,8 @@ spl_autoload_register(
                 'eventsourcing\\cartservice' => '/CartService.php',
                 'eventsourcing\\checkout' => '/Checkout.php',
                 'eventsourcing\\checkoutstartedevent' => '/domain/CheckoutStartedEvent.php',
+                'eventsourcing\\event' => '/domain/Event.php',
+                'eventsourcing\\eventlog' => '/domain/EventLog.php',
                 'eventsourcing\\sessionid' => '/domain/SessionId.php'
             );
         }
