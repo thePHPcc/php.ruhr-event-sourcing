@@ -7,10 +7,14 @@ spl_autoload_register(
         static $classes = null;
         if ($classes === null) {
             $classes = array(
+                'eventsourcing\\billingaddress' => '/domain/BillingAddress.php',
+                'eventsourcing\\billingaddresssetevent' => '/domain/BillingAddressSetEvent.php',
                 'eventsourcing\\cartitem' => '/domain/CartItem.php',
                 'eventsourcing\\cartitemcollection' => '/domain/CartItemCollection.php',
                 'eventsourcing\\cartnotfoundexception' => '/domain/CartNotFoundException.php',
                 'eventsourcing\\cartservice' => '/CartService.php',
+                'eventsourcing\\checkout' => '/Checkout.php',
+                'eventsourcing\\checkoutstartedevent' => '/domain/CheckoutStartedEvent.php',
                 'eventsourcing\\sessionid' => '/domain/SessionId.php'
             );
         }
