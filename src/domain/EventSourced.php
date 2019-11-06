@@ -24,7 +24,7 @@ abstract class EventSourced {
 
             if ($id === null ) {
                 $id = $event->emitterId();
-            } elseif ($id !== $event->emitterId()) {
+            } elseif ($id->asString() !== $event->emitterId()->asString()) {
                 throw new RuntimeException('Event by different emitter received');
             }
 

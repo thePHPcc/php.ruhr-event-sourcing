@@ -29,7 +29,10 @@ spl_autoload_register(
                 'eventsourcing\\filesystemeventlogreader' => '/FileSystemEventLogReader.php',
                 'eventsourcing\\filesystemeventlogwriter' => '/FileSystemEventLogWriter.php',
                 'eventsourcing\\sessionid' => '/domain/SessionId.php',
-                'eventsourcing\\sessionservice' => '/SessionService.php'
+                'eventsourcing\\sessionservice' => '/SessionService.php',
+                'eventsourcing\\snapshotevent' => '/domain/SnapshotEvent.php',
+                'eventsourcing\\snapshotter' => '/Snapshotter.php',
+                'eventsourcing\\timedfilesystemeventlogreader' => '/TimedFileSystemEventLogReader.php'
             );
         }
         $cn = strtolower($class);

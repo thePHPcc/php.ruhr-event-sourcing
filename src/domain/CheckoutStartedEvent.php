@@ -1,6 +1,8 @@
 <?php declare(strict_types = 1);
 namespace Eventsourcing;
 
+use DateTimeImmutable;
+
 class CheckoutStartedEvent implements Event {
 
     /** @var CartItemCollection */
@@ -9,7 +11,11 @@ class CheckoutStartedEvent implements Event {
     /** @var EmitterId */
     private $checkoutId;
 
-    public function __construct(EmitterId $checkoutId, CartItemCollection $cartItems) {
+    /** @var DateTimeImmutable */
+    private $createdTime;
+
+    public function __construct(DateTimeImmutable $createdTime, EmitterId $checkoutId, CartItemCollection $cartItems) {
+        $this->createdTime = $createdTime;
         $this->checkoutId = $checkoutId;
         $this->cartItems = $cartItems;
     }
@@ -22,5 +28,8 @@ class CheckoutStartedEvent implements Event {
         return $this->checkoutId;
     }
 
+    public function createdAt(): DateTimeImmutable {
+        return $this->createdTime;
+    }
 
 }

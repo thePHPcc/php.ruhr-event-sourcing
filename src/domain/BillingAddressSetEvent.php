@@ -1,6 +1,8 @@
 <?php declare(strict_types = 1);
 namespace Eventsourcing;
 
+use DateTimeImmutable;
+
 class BillingAddressSetEvent implements Event {
 
     /** @var BillingAddress */
@@ -9,7 +11,11 @@ class BillingAddressSetEvent implements Event {
     /** @var EmitterId */
     private $checkoutId;
 
-    public function __construct(EmitterId $checkoutId, BillingAddress $address) {
+    /** @var DateTimeImmutable */
+    private $createdTime;
+
+    public function __construct(DateTimeImmutable $createdTime, EmitterId $checkoutId, BillingAddress $address) {
+        $this->createdTime = $createdTime;
         $this->checkoutId = $checkoutId;
         $this->address = $address;
     }
@@ -22,4 +28,7 @@ class BillingAddressSetEvent implements Event {
         return $this->checkoutId;
     }
 
+    public function createdAt(): DateTimeImmutable {
+        return $this->createdTime;
+    }
 }

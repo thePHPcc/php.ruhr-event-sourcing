@@ -9,7 +9,8 @@ $factory = new Factory();
 $checkoutService = $factory->createCheckoutService($sid);
 
 $checkoutService->start();
-
 $checkoutService->defineBillingAddress(new BillingAddress());
+
+
 
 

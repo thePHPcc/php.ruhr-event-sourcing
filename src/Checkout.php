@@ -1,6 +1,7 @@
 <?php declare(strict_types = 1);
 namespace Eventsourcing;
 
+use DateTimeImmutable;
 use RuntimeException;
 
 class Checkout extends EventSourced {
@@ -23,7 +24,10 @@ class Checkout extends EventSourced {
         }
 
         $id = new EmitterId(trim(exec('uuidgen')));
-        $this->handle(new CheckoutStartedEvent($id, $cartItems));
+        $this->handle(new CheckoutStartedEvent(
+            new DateTimeImmutable('now'),
+            $id, $cartItems
+        ));
 
         return $id;
     }
@@ -33,7 +37,19 @@ class Checkout extends EventSourced {
             throw new RuntimeException('Checkout not started');
         }
 
-        $this->handle(new BillingAddressSetEvent($this->id, $address));
+        $this->handle(new BillingAddressSetEvent(
+            new DateTimeImmutable('now'),
+            $this->id, $address));
+    }
+
+    public function snapshot(): SnapshotEvent {
+        $properties = \get_object_vars($this);
+
+        return new SnapshotEvent(
+            $this->id,
+            new DateTimeImmutable('now'),
+            $properties
+        );
     }
 
     protected function applyEvent(Event $event): void {
@@ -44,6 +60,10 @@ class Checkout extends EventSourced {
 
         if ($event instanceof BillingAddressSetEvent) {
             $this->applyBillingAddressEvent($event);
+        }
+
+        if ($event instanceof SnapshotEvent) {
+            $this->applySnapshotEvent($event);
         }
     }
 
@@ -56,4 +76,11 @@ class Checkout extends EventSourced {
     private function applyBillingAddressEvent(BillingAddressSetEvent $event): void {
         $this->billingAddress = $event->address();
     }
+
+    private function applySnapshotEvent(SnapshotEvent $event): void {
+        foreach($event->properties() as $property => $value) {
+            $this->{$property} = $value;
+        }
+    }
+
 }
