@@ -2,5 +2,5 @@
 namespace Eventsourcing;
 
 interface EventLogReader {
-    public function read(): EventLog;
+    public function read(EmitterId $emitterId): EventLog;
 }

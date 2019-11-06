@@ -10,8 +10,13 @@ class FileSystemEventLogReader implements EventLogReader {
         $this->path = $path;
     }
 
-    public function read(): EventLog {
-        $events = file($this->path);
+    public function read(EmitterId $id): EventLog {
+        $fname = sprintf('%s/%s.events',
+            $this->path,
+            $id->asString()
+        );
+        
+        $events = file($fname);
         $log = new EventLog;
 
         foreach($events as $serialized) {

@@ -8,15 +8,15 @@ $sid = new SessionId('has4t1glskcktjh4ujs9eet26u');
 $cartService = new CartService();
 $cartItems = $cartService->getCartItems($sid);
 
-$writer = new FileSystemEventLogWriter('/tmp/checkout.events');
-$reader = new FileSystemEventLogReader('/tmp/checkout.events');
+$writer = new FileSystemEventLogWriter('/tmp/checkout');
+$reader = new FileSystemEventLogReader('/tmp/checkout');
 
 $checkout = new Checkout(new EventLog());
-$checkout->start($cartItems);
+$checkoutId = $checkout->start($cartItems);
 
 $writer->write($checkout->changes());
 
-$checkout = new Checkout($reader->read());
+$checkout = new Checkout($reader->read($checkoutId));
 $checkout->setBillingAddress(new BillingAddress());
 
 $writer->write($checkout->changes());

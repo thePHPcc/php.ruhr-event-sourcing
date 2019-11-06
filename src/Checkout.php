@@ -5,25 +5,27 @@ use RuntimeException;
 
 class Checkout extends EventSourced {
 
-    /** @var BillingAddress */
+    /** @var null|BillingAddress */
     private $billingAddress;
 
-    /** @var CartItemCollection */
+    /** @var null|CartItemCollection */
     private $cartItems;
 
     /** @var bool */
     private $started = false;
 
-    /** @var EmitterId */
+    /** @var null|EmitterId */
     private $id;
 
-    public function start(CartItemCollection $cartItems): void {
+    public function start(CartItemCollection $cartItems): EmitterId {
         if ($cartItems->count() === 0) {
             throw new RuntimeException('Can not start for empty collections');
         }
 
         $id = new EmitterId(trim(exec('uuidgen')));
         $this->handle(new CheckoutStartedEvent($id, $cartItems));
+
+        return $id;
     }
 
     public function setBillingAddress(BillingAddress $address): void {

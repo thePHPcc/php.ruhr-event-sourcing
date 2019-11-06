@@ -12,9 +12,15 @@ class FileSystemEventLogWriter implements EventLogWriter {
 
     public function write(EventLog $log): void {
         foreach($log as $event) {
+            /** @var Event $event */
             $serialized = \serialize($event) . "\n";
 
-            file_put_contents($this->path, $serialized, FILE_APPEND);
+            file_put_contents(
+                sprintf('%s/%s.events',
+                    $this->path,
+                    $event->emitterId()->asString()
+                ),
+                $serialized, FILE_APPEND);
         }
     }
 
